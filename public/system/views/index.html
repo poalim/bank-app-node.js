@@ -1,0 +1,101 @@
+<section data-ng-controller="IndexController" data-ng-init="init()">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-2">
+
+                <nav class="nav-sidebar">
+                    <ul class="nav">
+
+                        <li class="active"><a href="javascript:;">{{map.clickedMarker.address[0].formatted_address}}</a>
+                        </li>
+                        <li ng-show="!$first" ng-repeat="ac in map.clickedMarker.address[0].address_components"><a href="javascript:;">{{ac.long_name}}</a></li>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+            <div class="col-md-10">
+                <!--
+                <div class="row">
+                    <form class="navbar-form col-md-12" role="search">
+                        <div class="form-group ">
+                            <input type="text" ng-model="search"  class="form-control col-md-12" placeholder="Search">
+                        </div>
+                        <button ng-click="geoCode()" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        <button ng-click="gotoCurrentLocation()" type="submit" class="btn"><span class="glyphicon glyphicon-home"></span>
+                        </button>
+                    </form>
+                </div>
+                -->
+                <div class="row">
+                    <div class="col-md-12 indexpage">
+                        <google-map
+                                    center="map.center"
+                                    zoom="map.zoom"
+                                    bounds="map.bounds"
+                                    dragging="map.dragging"
+                                    events="map.events"
+                                    draggable="true"
+                                    control="map.controls">
+                            <marker ng-if="map.clickedMarker != null" coords="map.clickedMarker" icon="'/system/assets/img/markers/blue_marker.png'">
+                                <marker-label content="map.clickedMarker.title" anchor="22 0" class="marker-labels"/>
+                            </marker>
+<!--
+                            <layer type="google.maps.visualization.HeatmapLayer"
+                                   options='map.heatLayer'
+                                   show="map.heatLayer != null">
+                            </layer>-->
+                        </google-map>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" style="padding-top: 15px">
+            <div class="col-md-3" ng-repeat="dest in destinations">
+                <div class="post">
+                    <div class="post-img-content">
+                        <a href="#" ng-click="goDestination(dest)" alt="{{dest.verbose}}">
+                        <img class="img-responsive thumbnail" ng-src="/system/assets/img/locations/{{dest.id}}.jpg">
+                        <span class="post-title"><b>#{{dest.verbose}}</b></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!--
+            <div class="col-md-3">
+                <div class="post">
+                    <div class="post-img-content">
+                        <img class="img-responsive thumbnail" src="/system/assets/img/locations/newyork.jpg">
+                        <span class="post-title"><b>#New York</b></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="post">
+                    <div class="post-img-content">
+                        <img class="img-responsive thumbnail" src="/system/assets/img/locations/paris.jpg">
+                        <span class="post-title"><b>#Paris</b></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="post">
+                    <div class="post-img-content">
+                        <img class="img-responsive thumbnail" src="/system/assets/img/locations/moscow.jpg">
+                        <span class="post-title"><b>#Moscow</b></span>
+                    </div>
+                </div>
+
+            </div>
+            -->
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,186 @@
+<div class="" data-ng-controller="PostsController">
+
+    <script type="text/ng-template" id="newPostModalContent.html">
+        <div class="modal-header ">
+            <h2 class="modal-title">Say something!</h2>
+        </div>
+        <div class="modal-body">
+            <!--
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+            -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
+                    <input class="form-control" name="subject" placeholder="Tags" type="text" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <textarea style="resize:vertical;" class="form-control" placeholder="Message..." rows="6"
+                              name="comment" required></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">Post</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <div class="container" data-ng-init="initPosts()">
+        <div class="row">
+            <section>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class=" col-md-5">
+                            <button style="width: 100%" class="btn btn-primary" ng-click="queryPlaces()">Places
+                                ({{map.countNotFiltered}}/{{map.placesMarkers.length}})
+                            </button>
+
+
+                        </div>
+                        <div class=" col-md-7">
+                            <button style="width: 100%" class="btn btn-success" ng-click="openNewPostModal()">New post
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top: 15px">
+                        <google-map class="col-md-12 postsfeed"
+                                    center="map.center"
+                                    zoom="map.zoom"
+                                    bounds="map.bounds"
+                                    dragging="map.dragging"
+                                    events="map.events"
+                                    draggable="true"
+                                    control="map.control">
+
+                            <marker ng-if="m.place.filtered != true" ng-repeat="m in map.placesMarkers" coords="m"
+                                    icon="m.icon"
+                                    click="onMarkerClicked(m)">
+                                <marker-label content="''" anchor="22 0" class="marker-labels"/>
+
+                            </marker>
+                            <marker ng-if="m.place.filtered == true" ng-repeat="m in map.placesMarkers" coords="m"
+                                    icon="'/system/assets/img/markers/marker-filtered.png'">
+                                <marker-label content="''" anchor="22 0" class="marker-labels"/>
+
+                            </marker>
+                            <marker ng-if="map.clickedMarker != null" coords="map.clickedMarker"
+                                    icon="'/system/assets/img/markers/blue_marker.png'">
+                                <marker-label content="''" anchor="22 0" class="marker-labels"/>
+                            </marker>
+                        </google-map>
+                    </div>
+                    <div class="row" style="padding-top: 15px">
+                        <div class="col-md-12">
+                            <ul class="nav nav-pills nav-stacked">
+
+                                <li ng-class="{'active' : category.selected}"
+                                    data-ng-repeat="category in map.categoriesSorted">
+                                    <a href="#" data-ng-click="toggleCategory(category)">{{category.name}}<span
+                                            class="badge pull-right">{{category.count}}</span></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <div class="col-md-8">
+                <section data-ng-repeat="fbPlace in fbPlacesPage">
+                    <div class="row" style="padding: 10px 10px 0px 10px; background-color: #ddd">
+                        <div class="col-md-12"
+                             style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 4px">
+                            <div class="row" style="padding-top: 10px">
+
+                                <div class="col-md-12">
+                                    <div class="author pull-left">
+                                        <span class="glyphicon glyphicon-home"></span>
+                                        <b>{{fbPlace.name}}</b>
+
+                                        <div style="padding-bottom: 5px">
+                                            <span ng-if="fbPlace.category_list.length == 0" class="label label-default">#{{fbPlace.category}}</span>
+                                            <span class="label label-default" style="margin: 2px"
+                                                data-ng-repeat="cat in fbPlace.category_list">#{{cat.name}}</span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="pull-right" style="padding-bottom: 10px">
+                                        <a href="#" ng-if="fbPlace.distance > 20" class="btn btn-default btn-sm"> <span
+                                                class="glyphicon glyphicon-play"></span> Go! {{fbPlace.distance}}</a>
+                                        <a href="#" ng-if="fbPlace.distance < 20" disabled="disabled"
+                                           class="btn btn-default btn-sm"> <span
+                                                class="glyphicon glyphicon-screenshot"></span> It near you</a>
+                                        <a href="#" class="btn btn-danger btn-sm"> <span
+                                                class="glyphicon glyphicon-thumbs-up"></span> Wow!</a>
+                                        <a href="#" class="btn btn-success btn-sm"> <span
+                                                class="glyphicon glyphicon-comment"></span> Comment</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div ng-if="fbPlace.feedResponse.data.length == 0">
+                                <div class="col-md-12">{{fbPlace.feedResponse.data.length}} events found... Be first to
+                                    create one!
+                                </div>
+                            </div>
+                            <div class="row"
+                                 style=" max-height: 150px; overflow: hidden; padding-left : 13px; padding-right: 13px">
+
+                                <div class="col-md-2" style="padding-left : 2px; padding-right: 2px"
+                                     ng-repeat="postWithPicture in fbPlace.postsWithImages">
+
+                                    <a href="#" class="thumbnail"
+                                       style="margin-bottom: 5px; max-height: 150px; overflow: hidden">
+                                        <img ng-src="{{postWithPicture.picture}}" alt="...">
+                                    </a>
+
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-12" ng-if="fbPlace.feedResponse.data.length > 0">
+
+                                    <ul class="list-group">
+                                        <li ng-class="{ 'list-group-item list-group-item-info' : feedItem.hint == 'story',
+                                  'list-group-item' : feedItem.hint == 'remarks',
+                                   'list-group-item list-group-item-warning' : feedItem.hint == 'question',
+                                    'list-group-item list-group-item-success' : feedItem.hint == 'exclamation'}"
+                                            ng-repeat="feedItem in fbPlace.feedResponse.data  | filter:{message:''}| limitTo: 7 ">
+                                    <span ng-if="feedItem.picture != null" class="glyphicon glyphicon-camera"
+                                          alt="{{feedItem.hint}}"></span>
+                                    <span ng-if="feedItem.picture == null" class="glyphicon glyphicon-comment"
+                                          alt="{{feedItem.hint}}"></span>
+                                            <span>{{feedItem.message}}</span><br/>
+                                            <span class="label label-default">{{feedItem.created_time}}</span>
+                                        </li>
+
+                                    </ul>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

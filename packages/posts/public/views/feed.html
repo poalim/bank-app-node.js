@@ -1,0 +1,157 @@
+<div class="" data-ng-controller="FeedController">
+    <div class="container" data-ng-init="initFeed()">
+        <div class="row" ng-if="!global.authenticated">
+            <div class="col-md-12">
+                Not authenticated.
+            </div>
+        </div>
+        <div class="row" ng-if="global.authenticated">
+
+            <div class="col-md-5">
+                <div class="row">
+                    <div class=" col-md-5">
+                        <button style="width: 100%" class="btn btn-primary" ng-click="queryPosts()">Posts</button>
+                    </div>
+                    <div class=" col-md-2">
+                        <button style="width: 100%" class="btn btn-success" ng-click="loadInstagramPosts()">test
+                        </button>
+                    </div>
+                    <div class=" col-md-5">
+                        <button style="width: 100%" class="btn btn-success" ng-click="openNewPostModal()">New post
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top: 15px ">
+                    <google-map class="col-md-12 postsfeed"
+                                center="map.center"
+                                zoom="map.zoom"
+                                bounds="map.bounds"
+                                dragging="map.dragging"
+                                events="map.events"
+                                draggable="true"
+                                control="map.controls">
+                        <marker ng-repeat="m in map.postsMarkers" coords="m"
+                                icon="m.icon"
+                                click="onMarkerClicked(m)">
+                            <marker-label content="''" anchor="22 0" class="marker-labels"/>
+                        </marker>
+                        <marker ng-if="map.clickedMarker != null" coords="map.clickedMarker"
+                                icon="'/system/assets/img/markers/blue_marker.png'">
+                            <marker-label content="''" anchor="22 0" class="marker-labels"/>
+                        </marker>
+                    </google-map>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-7">
+                <div ng-if="newPost != null" class="well well-sm">
+                    <div class="row">
+                        <div class="col-xs-2 col-md-2 text-center">
+                            <img ng-src="{{global.fb.profilePictureUrl}}"
+                                 class="img-rounded img-responsive"/>
+                        </div>
+                        <div class="col-xs-10 col-md-10 section-box">
+
+                            <p>
+
+                            <form class="form-horizontal"><input type="text" class="form-control input-xxlarge" ng-model="newPost.content"
+                                                                 placeholder="{{newPost.content}}" required>
+                            </form>
+                            </p>
+                            <hr/>
+                            <div class="row rating-desc">
+                                <div class="col-md-12">
+
+                                    <form class="form-inline pull-right ">
+                                        <div class="form-group">
+                                            <span class="label label-default">{{newPost.formattedCreated}}</span>
+                                            <span class="separator">|</span>
+
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Anonymous
+                                                </label>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-picture"></span>upload
+                                            </button>
+                                            <button ng-show="{{newPost.saving == false}}" type="submit" class="btn btn-success" ng-click="create()">
+
+                                                <span class="glyphicon glyphicon-record"></span>Send
+                                            </button>
+                                            <button ng-show="{{newPost.saving}}" type="submit" disabled class="btn btn-default" ng-click="create()">
+                                                <span class="glyphicon glyphicon-record"></span>Send
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px">
+                        <div class="col-md-12">
+                            <image class="img-rounded img-responsive" ng-src="{{newPost.streetViewUrl}}"></image>
+                        </div>
+                    </div>
+                </div>
+                <div class="well well-sm" ng-if="posts == undefined">
+                    <div class="row">
+                        <div class="col-md-12">Loading</div>
+                    </div>
+                </div>
+                <div class="well well-sm" ng-repeat="post in posts">
+                    <div class="row">
+                        <div class="col-xs-2 col-md-2 text-center">
+                            <img ng-src="{{global.fb.profilePictureUrl}}"
+                                 class="img-rounded img-responsive"/>
+                            <!--
+                            <img src="http://bootsnipp.com/apple-touch-icon-114x114-precomposed.png" alt="bootsnipp"
+                                 class="img-rounded img-responsive" />
+                                 -->
+                        </div>
+                        <div class="col-xs-10 col-md-10 section-box">
+                            <!--
+                            <h2>
+                                Bootsnipp <a href="http://bootsnipp.com/" target="_blank"><span class="glyphicon glyphicon-new-window">
+                            </span></a>
+                            </h2>
+                            -->
+                            <p>{{post.content}}</p>
+                            <hr/>
+                            <div class="row rating-desc">
+                                <div class="col-md-12">
+
+                                    <form class="form-inline pull-right ">
+                                        <div class="form-group">
+                                            <span class="label label-default">{{post.formattedCreated}}</span>
+                                            <span class="separator">|</span>
+                                            <span class="glyphicon glyphicon-comment"></span>(100 Comments)
+                                            <input type="text" class="form-control" name="validate-text"
+                                                   id="validate-text" placeholder="Add comment" required>
+                                            <button type="submit" class="btn btn-default filter-col">
+                                                <span class="glyphicon glyphicon-record"></span>Send
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 5px">
+                        <div class="col-md-12">
+                            <image class="img-rounded img-responsive" ng-src="{{post.streetViewUrl}}"></image>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <p class="navbar-text pull-left">© 2014 - Streetpost
+            <b> | </b><a href="http://tinyurl.com/tbvalid" target="_blank" > Contact Us </a>
+            <b> | </b><a href="http://tinyurl.com/tbvalid" target="_blank" > Support </a>
+            <b> | </b><a href="http://tinyurl.com/tbvalid" target="_blank" > About </a>
+        </p>
+
+        <a href="http://youtu.be/zJahlKPCL9g" class="navbar-btn btn-danger btn pull-right">
+            <span class="glyphicon glyphicon-phone"></span> Mobile Apps</a>
+    </div>
+
+
+</div>
+
+<script src='//maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyCurwIBgotgeHfruJzlz2Fx0T_XTt2IJoQ&libraries=geometry,visualization'></script>
+
+<script src='//connect.facebook.net/en_US/sdk.js'></script>
+
+
+{% for file in assets.core.js %}
+    <script type="text/javascript" src="/{{file}}"></script>
+{% endfor %}
+
+{% if (process.env.NODE_ENV == 'development') %}
+    <!-- Livereload script rendered -->
+    <script type="text/javascript" src="{{'http://' + req.host + ':35729/livereload.js'}}"></script>
+{% endif %}
+

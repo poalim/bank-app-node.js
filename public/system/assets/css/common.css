@@ -1,0 +1,134 @@
+
+.indexpage .angular-google-map-container {
+    height: 330px;
+}
+.postsfeed .angular-google-map-container {
+    height: 300px;
+}
+
+.nav-sidebar .active a {
+    cursor: default;
+    background-color: #34ca78;
+    color: #fff;
+}
+
+.page-header {
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+    border-bottom: 0 !important;
+}
+.page-header .navbar-nav {
+    float: right;
+}
+.page-header>div>div, .page-header>div>ul {
+    display:inline-block;
+}
+.text-edit {
+    padding: 13px 0 0 0;
+}
+.account {
+    text-align:right;
+}
+.account>div, .account>ul {
+    text-align:left;
+}
+.navbar .nav>li>a.brand {
+    padding-left:20px;
+    margin-left:0
+}
+.content {
+    margin-top:70px;
+    width:100%
+}
+footer {
+    position:fixed;
+    left:0;
+    bottom:0;
+    height:30px;
+    width:100%;
+    background:#ddd;
+    -webkit-box-shadow:0 8px 6px 6px black;
+    -moz-box-shadow:0 8px 6px 6px black;
+    box-shadow:0 8px 6px 6px black
+}
+footer p {
+    padding:5px 0 12px 10px
+}
+.ng-invalid.ng-dirty{
+    border-color:#FA787E;
+}
+.ng-valid.ng-dirty{
+    border-color:#78FA89;
+}
+
+
+/*
+    Note: It is best to use a less version of this file ( see http://css2less.cc
+    For the media queries use @screen-sm-min instead of 768px.
+    For .omb_spanOr use @body-bg instead of white.
+*/
+
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.omb_login .omb_authTitle {
+    text-align: center;
+    line-height: 300%;
+}
+
+.omb_login .omb_socialButtons a {
+    color: white;
+opacity:0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+    opacity:1;
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+.omb_login .omb_loginOr {
+    position: relative;
+    font-size: 1.5em;
+    color: #aaa;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -0.6em;
+    margin-left: -1.5em;
+    background-color: white;
+    width: 3em;
+    text-align: center;
+}
+
+.omb_login .omb_loginForm .input-group.i {
+    width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+        margin-top:10px;
+    }
+}
